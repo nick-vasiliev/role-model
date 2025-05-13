@@ -21,10 +21,12 @@ class Kibble:
         n_fails: An int number of fails in a row
         n_successes: An int tracking total rolls >= dc
         n_rolls: An int tracking the total checks
+        name: An str name for the item being crafted
     """
-    def __init__(self, dc: int, rolls_needed: int):
+    def __init__(self, dc: int, rolls_needed: int, name: str = ""):
         self.dc = dc
         self.rolls_needed = rolls_needed
+        self.name = name
 
         self.n_fails = 0
         self.n_successes = 0
