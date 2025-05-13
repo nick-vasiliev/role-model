@@ -1,6 +1,13 @@
+"""Represents a Kibble's 5e crafting series
+
+Usage example:
+
+    helmet = Kibble(15,3)
+    while not(helmet.is_success() or helmet.is_failed()):
+        helmet.check(20) # would use a Dice.roll()
+
 """
-"""
-from dice import Dice, Advantage
+
 
 class Kibble:
     """A series of several checks to craft an item.
@@ -28,11 +35,11 @@ class Kibble:
 
         Args:
             roll: An int to compare to the dc
-        
+
         Returns
             True if crafting can continue and False if it cannot.
         """
-        if self.isFailed() or self.isSuccess():
+        if self.is_failed() or self.is_success():
             return False
         self.n_rolls += 1
         if roll >= self.dc:
@@ -40,12 +47,22 @@ class Kibble:
             self.n_successes += 1
             return True
         self.n_fails += 1
-        if self.isFailed():
+        if self.is_failed():
             return False
         return True
 
-    def isSuccess(self):
+    def is_success(self):
+        """Is the crafting a success?
+
+        Returns:
+            True if the number of successful checks has surpassed the required amount
+        """
         return self.n_successes >= self.rolls_needed
-    
-    def isFailed(self):
+
+    def is_failed(self):
+        """Is the crafting a failure?
+
+        Returns:
+            True if the number of failed checks has surpassed 3
+        """
         return self.n_fails >= 3
