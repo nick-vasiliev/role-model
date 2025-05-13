@@ -1,6 +1,6 @@
 """
 """
-from classes import Dice, Advantage
+from dice import Dice, Advantage
 
 class Kibble:
     """A series of several checks to craft an item.

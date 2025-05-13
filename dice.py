@@ -40,6 +40,9 @@ class Dice:
         Args:
             advantage: An Advantage enum that allows taking the max or min dice when amount >1.
             amount: An int that specifies the number of dice to roll. Will take the average if there is no Advantage specified.
+        
+        Returns:
+            An int which is the average roll when no advantage, max roll when advantage, and min roll with disadvantage.
         """
         current = randint(1,self.sides)+self.modifier
         for roll_n in range(1,amount):
@@ -51,6 +54,3 @@ class Dice:
             if advantage == Advantage.NONE:
                 current = (current * roll_n + next) / (roll_n + 1) # undo last average then average
         return int(current)
-
-n = Dice(20)
-print(n.roll(advantage=Advantage.ADVANTAGE, amount=2))
