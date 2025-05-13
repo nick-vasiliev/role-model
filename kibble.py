@@ -68,3 +68,14 @@ class Kibble:
             True if the number of failed checks has surpassed 3
         """
         return self.n_fails >= 3
+
+def roll_until_complete(kibble: Kibble, generator ):
+    """Perform checks on a kibble until it is done.
+
+    Args:
+        kibble: A Kibble to repeatedly do check() on
+        generator: A function that will provide the number passed to check
+            e.g. randint() or Dice.roll()
+    """
+    while not( kibble.is_failed() or kibble.is_success() ):
+        kibble.check( generator() )
