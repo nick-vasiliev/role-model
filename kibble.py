@@ -69,7 +69,7 @@ class Kibble:
         """
         return self.n_fails >= 3
 
-def roll_until_complete(kibble: Kibble, generator ):
+def roll_until_complete( kibble: Kibble, generator = None ):
     """Perform checks on a kibble until it is done.
 
     Args:
@@ -77,5 +77,8 @@ def roll_until_complete(kibble: Kibble, generator ):
         generator: A function that will provide the number passed to check
             e.g. randint() or Dice.roll()
     """
+    if generator is None:
+        raise Exception("Generator cannot be None")
+
     while not( kibble.is_failed() or kibble.is_success() ):
         kibble.check( generator() )
