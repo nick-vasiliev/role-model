@@ -22,15 +22,25 @@ class Kibble:
         n_successes: An int tracking total rolls >= dc
         n_rolls: An int tracking the total checks
         name: An str name for the item being crafted
+        always_complete: A bool if set True means that any check resulting
+            in incrementing n_fails to 3 auto succeeds.
+        n_auto_success: An int tracking times auto_complete caused a success
     """
-    def __init__(self, dc: int, rolls_needed: int, name: str = ""):
+    def __init__(self,
+                 dc: int,
+                 rolls_needed: int,
+                 name: str = "",
+                 always_complete: bool = False
+                 ):
         self.dc = dc
         self.rolls_needed = rolls_needed
         self.name = name
+        self.always_complete = always_complete
 
         self.n_fails = 0
         self.n_successes = 0
         self.n_rolls = 0
+        self.n_auto_successes = 0
 
     def check(self, roll: int):
         """Given a dice check, evaluate success and determine if crafting can continue.
@@ -41,6 +51,11 @@ class Kibble:
         Returns
             True if crafting can continue and False if it cannot.
         """
+        if self.always_complete and self.n_fails >= 2:
+            self.n_fails = 0
+            self.n_successes += 1
+            self.n_auto_successes += 1
+            return True
         if self.is_failed() or self.is_success():
             return False
         self.n_rolls += 1
